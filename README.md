@@ -17,6 +17,10 @@ TODO
 ```sh
 docker-compose up -d
 ```
+Go to http://localhost:3000/d/-ItR25vWz/crawler-backend-overview?orgId=1. You should see the dashboard
+
+
+
 ## Authors
 
 * **David Goldstein** - [DavidCharlesGoldstein.com](http://www.davidcharlesgoldstein.com/?crawler-deployment) - [Decipher Technology Studios](http://deciphernow.com/)
