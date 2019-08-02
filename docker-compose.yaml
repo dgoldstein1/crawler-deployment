@@ -72,10 +72,10 @@ services:
 
   grafana:
     image: grafana/grafana
-    volumes:
-      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./docker/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
-      - ./docker/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
-      - ./docker/grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    # volumes:
+    #   - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
+    #   - ./docker/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+    #   - ./docker/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+    #   - ./docker/grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
     ports:
     - "3000:3000"
