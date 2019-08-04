@@ -17,8 +17,9 @@ TODO
 ```sh
 docker-compose up -d
 ```
-Go to http://localhost:3000/d/-ItR25vWz/crawler-backend-overview?orgId=1. You should see the dashboard
+Go to http://localhost:3000 to access grafana. The username / password are "admin" / "admin". Go to the dashboard called "Crawler Backend Overview" and select "last 5 minutes as the timeframe. You should see a dashbaord looking something like:
 
+![dashbaord](pictures/grafana.png)
 
 
 ## Authors
