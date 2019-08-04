@@ -6,7 +6,7 @@ Docker and Kubernetes deployment configuration for distributed web crawlers inde
 
 ## Run Locally
 
-Index 200k-300k nodes and exit.
+Indexes around 100k nodes and exit.
 
 ### Minishift
 
