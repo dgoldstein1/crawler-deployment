@@ -8,9 +8,9 @@ Docker and Kubernetes deployment configuration for distributed web crawlers inde
 
 Indexes around 100k nodes and exit.
 
-### Minishift
+### Kubernetes
 
-TODO
+
 
 ### Docker
 

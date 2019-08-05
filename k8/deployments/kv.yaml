@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kv-deployment
+  labels:
+    app: kv
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kv
+  template:
+    metadata:
+      labels:
+        app: kv
+    spec:
+      containers:
+      - name: kv
+        image: dgoldstein1/twowaykv:0.2.2
+        ports:
+        - containerPort: 5000
