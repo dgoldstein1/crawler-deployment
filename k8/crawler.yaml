@@ -20,7 +20,7 @@ spec:
   selector:
     matchLabels:
       app: crawler
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -33,13 +33,13 @@ spec:
         - containerPort: 8001
         env:
           - name: GRAPH_DB_ENDPOINT
-            value: "http://biggraph:5000"
+            value: "http://graph:5000"
           - name: TWO_WAY_KV_ENDPOINT
             value: "http://kv:5001"
           - name: STARTING_ENDPOINT
             value: "https://en.wikipedia.org/wiki/Cheddar_cheese"
           - name: MAX_APPROX_NODES
-            value: "1000"
+            value: "10"
           - name: METRICS_PORT
             value: "8001"
           - name: COMMAND

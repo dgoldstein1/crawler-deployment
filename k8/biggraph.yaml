@@ -2,32 +2,32 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: biggraph
-  name: biggraph
+    app: graph
+  name: graph
   namespace: default
 spec:
   type: NodePort
   ports:
     - port: 5000
   selector:
-    app: biggraph
+    app: graph
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: biggraph
+  name: graph
 spec:
   selector:
     matchLabels:
-      app: biggraph
+      app: graph
   replicas: 1
   template:
     metadata:
       labels:
-        app: biggraph
+        app: graph
     spec:
       containers:
-      - name: biggraph
+      - name: graph
         image: dgoldstein1/biggraph:0.1.1
         ports:
         - containerPort: 5000
