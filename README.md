@@ -10,7 +10,22 @@ Indexes around 100k nodes and exit.
 
 ### Kubernetes
 
-
+```sh
+# start local minikube
+minikube start
+...
+# start local cluster
+kubectrl create -f k8
+service/graph created
+deployment.apps/graph created
+service/crawler created
+deployment.apps/crawler created
+service/kv created
+deployment.apps/kv created
+service/prom created
+deployment.apps/prom created
+...
+```
 
 ### Docker
 

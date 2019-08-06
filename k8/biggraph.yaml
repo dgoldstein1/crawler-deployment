@@ -9,6 +9,9 @@ spec:
   type: NodePort
   ports:
     - port: 5000
+      name : "main"
+    - port: 8001
+      name : "metrics"
   selector:
     app: graph
 ---
@@ -31,3 +34,4 @@ spec:
         image: dgoldstein1/biggraph:0.1.1
         ports:
         - containerPort: 5000
+        - containerPort: 8001

@@ -1,0 +1,3 @@
+from prom/prometheus:v2.11.1
+# copy in needed files
+copy ./prometheus-k8.yml /etc/prometheus/prometheus.yml

@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: prom
-          image: prom/prometheus:v2.11.1
+          image: dgoldstein1/crawler-deployment:prometheus
           args:
             - "--log.level=debug"
             - "--config.file=/etc/prometheus/prometheus.yml"
