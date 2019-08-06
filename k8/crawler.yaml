@@ -44,3 +44,10 @@ spec:
             value: "8001"
           - name: COMMAND
             value: "wikipedia"
+      initContainers:
+        - name: init-myservice
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup graph; do echo waiting for graph-service; sleep 2; done;']
+        - name: init-mydb
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup kv; do echo waiting for kv-service; sleep 2; done;']
