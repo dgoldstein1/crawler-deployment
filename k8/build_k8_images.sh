@@ -6,3 +6,5 @@ docker build . -t dgoldstein1/crawler-deployment:prometheus
 docker push dgoldstein1/crawler-deployment:prometheus
 
 # build gra
+cd  docker/grafana
+docker 
