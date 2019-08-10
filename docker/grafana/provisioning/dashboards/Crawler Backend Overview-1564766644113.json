@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "panels": [
     {
@@ -138,7 +137,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(golang_nodes_added)",
+          "expr": "sum(increase(golang_nodes_added[52w]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -285,7 +284,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(golang_max_depth)",
+          "expr": "max_over_time(golang_max_depth[52w])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -367,7 +366,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(golang_nodes_visited)",
+          "expr": "sum(increase(golang_nodes_visited[52w]))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -425,7 +424,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(golang_nodes_added[5m]))",
+          "expr": "rate(golang_nodes_added[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -664,7 +663,7 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
