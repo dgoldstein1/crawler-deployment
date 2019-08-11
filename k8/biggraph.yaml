@@ -11,6 +11,12 @@ spec:
     - port: 5000
   selector:
     app: graph
+    ports:
+    - port: 5001
+      name : "main"
+    - port: 8001
+      name : "metrics"
+
 ---
 apiVersion: apps/v1
 kind: Deployment
