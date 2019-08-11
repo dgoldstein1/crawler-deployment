@@ -32,6 +32,13 @@ spec:
       containers:
       - name: graph
         image: dgoldstein1/biggraph:0.1.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         - containerPort: 8001
+        volumeMounts:
+          - name: graph-data
+            mountPath: /usr/graphApi/current_graph_data
+      volumes:
+        - name : graph-data
+          emptyDir : {}

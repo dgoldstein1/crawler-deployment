@@ -29,5 +29,12 @@ spec:
       containers:
       - name: kv
         image: dgoldstein1/twowaykv:0.2.2
+        imagePullPolicy: Always
         ports:
         - containerPort: 5001
+        volumeMounts:
+        - name: kv-data
+          mountPath: /db/twowaykv
+      volumes:
+      - name: kv-data
+        emptyDir: {}

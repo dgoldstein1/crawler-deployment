@@ -29,6 +29,7 @@ spec:
       containers:
       - name: crawler
         image: dgoldstein1/crawler:0.2.6
+        imagePullPolicy: Always
         ports:
         - containerPort: 8001
         env:
