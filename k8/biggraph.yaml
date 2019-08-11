@@ -9,9 +9,6 @@ spec:
   type: NodePort
   ports:
     - port: 5000
-      name : "main"
-    - port: 8001
-      name : "metrics"
   selector:
     app: graph
 ---
@@ -35,7 +32,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
-        - containerPort: 8001
         volumeMounts:
           - name: graph-data
             mountPath: /usr/graphApi/current_graph_data

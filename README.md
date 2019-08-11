@@ -58,6 +58,44 @@ docker-compose up -d
 ```
 Go to http://localhost:3000 to access grafana and find the dashboard "Crawler Backend Overview".
 
+## Deployment
+
+### Kubernetes on GKE
+
+Create a gcloud account, and create a standard k8 cluster.
+```sh
+gcloud init
+# see current projects available
+gcloud config list
+[compute]
+region = us-central1
+zone = us-central1-a
+[core]
+account = dgoldstein01@gmail.com
+disable_usage_reporting = True
+project = crawler-deployment
+
+Your active configuration is: [default]
+# set kubectl to use standar-cluster-1
+gcloud container clusters get-credentials standard-cluster-1
+# create pods one at a time or else it's easy to overwhelm the cluster
+kubectl create -f k8/graph.yaml
+kubectl get pods --watch
+...
+# once all have been deployed, proxy to local machine:
+kubectl proxy
+# hit the graph service in a new tab
+curl http://localhost:8001/api/v1/namespaces/default/services/graph/proxy/info
+Python type PNGraph: Directed
+  Nodes:                    12159
+  Edges:                    15897
+  Zero Deg Nodes:           0
+  Zero InDeg Nodes:         0
+  Zero OutDeg Nodes:        12114
+  NonZero In-Out Deg Nodes: 45
+# open up grafana
+gnome-open http://localhost:8001/api/v1/namespaces/default/services/grafana/proxy/d/-ItR25vWz/crawler-backend-overview?orgId=1&refresh=5s
+```
 
 ## Authors
 
