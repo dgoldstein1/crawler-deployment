@@ -11,12 +11,6 @@ spec:
     - port: 5000
   selector:
     app: graph
-    ports:
-    - port: 5001
-      name : "main"
-    - port: 8001
-      name : "metrics"
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,7 +28,7 @@ spec:
     spec:
       containers:
       - name: graph
-        image: dgoldstein1/biggraph:0.1.1
+        image: dgoldstein1/biggraph:0.2.3
         imagePullPolicy: Always
         ports:
         - containerPort: 5000

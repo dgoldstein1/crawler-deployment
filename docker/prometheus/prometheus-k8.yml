@@ -7,7 +7,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets:
-          - crawler:8001
+          - crawler:5000
 
   - job_name: kv
     static_configs:
