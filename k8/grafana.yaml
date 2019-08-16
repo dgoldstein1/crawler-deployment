@@ -28,6 +28,6 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: dgoldstein1/crawler-deployment:grafana-0.2.3
+        image: dgoldstein1/crawler-deployment:grafana-0.3.0
         ports:
         - containerPort: 3000
