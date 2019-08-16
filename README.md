@@ -16,7 +16,8 @@ Indexes around 100k nodes and exit.
 # start local minikube
 minikube start
 ...
-# start local cluster
+# start local cluster, be sure to decrease the number of max nodes or else
+# your machine will crash 
 kubectrl create -f k8
 service/graph created
 deployment.apps/graph created

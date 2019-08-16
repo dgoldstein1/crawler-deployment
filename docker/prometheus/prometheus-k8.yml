@@ -17,4 +17,4 @@ scrape_configs:
   - job_name: biggraph
     static_configs:
       - targets:
-          - graph:8001
+          - graph:5000

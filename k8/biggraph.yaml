@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: graph
-        image: dgoldstein1/biggraph:0.2.3
+        image: dgoldstein1/biggraph:0.1.2
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
