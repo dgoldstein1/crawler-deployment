@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: prom
+  name: prom
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: prom
+    spec:
+      containers:
+      - command:
+        - /bin/prometheus
+        - --web.external-url
+        - http://localhost:8443/admin/prometheus/
+        - --web.route-prefix=/
+        - --log.level=debug
+        - --config.file=/etc/prometheus/prometheus.yml
+        image: dgoldstein1/crawler-deployment:prometheus
+        name: prom
+        ports:
+        - containerPort: 9090
+        resources: {}
+        volumeMounts:
+        - mountPath: ./data
+          name: prom-claim0
+      restartPolicy: Always
+      volumes:
+      - name: prom-claim0
+        persistentVolumeClaim:
+          claimName: prom-claim0
+status: {}
