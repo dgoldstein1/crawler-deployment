@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yaml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kv
+  name: kv
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yaml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kv
+    spec:
+      containers:
+      - image: dgoldstein1/twowaykv:1.0.0
+        name: kv
+        ports:
+        - containerPort: 5001
+        resources: {}
+      restartPolicy: Always
+status: {}
