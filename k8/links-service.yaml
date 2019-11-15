@@ -3,6 +3,7 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+    kompose.image-pull-policy: Always
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
@@ -12,7 +13,7 @@ spec:
   ports:
   - name: "3000"
     port: 3000
-    targetPort: 3000
+    targetPort: 80
   selector:
     io.kompose.service: links
 status:
