@@ -6,7 +6,7 @@ services:
   ## Services ##
   ##############
 
-  c1:
+  crawler:
     image: dgoldstein1/crawler:1.0.0
     depends_on:
       - kv
@@ -19,6 +19,9 @@ services:
       - METRICS_PORT=8001
       - PARALLELISM=16
       - MS_DELAY=5
+    links:
+      - kv
+      - biggraph
 
 
   edge:
@@ -28,7 +31,7 @@ services:
     restart: always
 
   links:
-    image: links-ui:1.0.0
+    image: dgoldstein1/links:1.0.0
     ports:
       - 3000:3000
     environment:
@@ -48,10 +51,8 @@ services:
       - 5001:5001
     depends_on:
       - prom
-    environment:
-      - GRAPH_DB_STORE_DIR="/tmp/twowaykv"
     volumes:
-      - /tmp/twowaykv
+      - /db/twowaykv
 
   graph:
     image: dgoldstein1/biggraph:0.1.5
@@ -60,11 +61,8 @@ services:
       - 8001:8001
     depends_on:
       - prom
-    environment:
-      - GRAPH_SAVE_PATH=/data/wikipedia_graph.graph
-      - GRAPH_SAVE_INTERVAL=60
     volumes:
-      - /data/wikipedia_graph.graph
+      - /data/current_graph.graph
 
   ################
   ## Monitoring ##
@@ -75,6 +73,10 @@ services:
     ports:
       - 9090:9090
     entrypoint: "/bin/prometheus --web.external-url http://localhost:8443/admin/prometheus/ --web.route-prefix=/ --log.level=debug --config.file=/etc/prometheus/prometheus.yml"
+    links:
+      - biggraph
+      - kv
+      - crawler
     volumes:
       - ./data
 

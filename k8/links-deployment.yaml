@@ -34,7 +34,7 @@ spec:
           value: /services/twowaykv
         - name: REACT_APP_WIKIMETA_ENDPOINT
           value: /services/wiki/w/api.php
-        image: links-ui:1.0.0
+        image: dgoldstein1/links:1.0.0
         name: links
         ports:
         - containerPort: 3000

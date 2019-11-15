@@ -22,16 +22,13 @@ spec:
         io.kompose.service: kv
     spec:
       containers:
-      - env:
-        - name: GRAPH_DB_STORE_DIR
-          value: '"/tmp/twowaykv"'
-        image: dgoldstein1/twowaykv:1.0.0
+      - image: dgoldstein1/twowaykv:1.0.0
         name: kv
         ports:
         - containerPort: 5001
         resources: {}
         volumeMounts:
-        - mountPath: /tmp/twowaykv
+        - mountPath: /db/twowaykv
           name: kv-claim0
       restartPolicy: Always
       volumes:

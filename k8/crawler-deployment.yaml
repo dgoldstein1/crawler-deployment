@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: c1
-  name: c1
+    io.kompose.service: crawler
+  name: crawler
 spec:
   replicas: 1
   strategy: {}
@@ -18,7 +18,7 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: c1
+        io.kompose.service: crawler
     spec:
       containers:
       - env:
@@ -37,7 +37,7 @@ spec:
         - name: TWO_WAY_KV_ENDPOINT
           value: http://kv:5001
         image: dgoldstein1/crawler:1.0.0
-        name: c1
+        name: crawler
         resources: {}
       restartPolicy: Always
 status: {}
