@@ -3,6 +3,9 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+    kompose.image-pull-policy: Always
+    kompose.service.expose: "true"
+    kompose.service.type: nodeport
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
@@ -15,5 +18,6 @@ spec:
     targetPort: 3000
   selector:
     io.kompose.service: grafana
+  type: NodePort
 status:
   loadBalancer: {}

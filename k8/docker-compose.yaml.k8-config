@@ -78,11 +78,12 @@ services:
   ################
   grafana:
     image: dgoldstein1/crawler-deployment:grafana
+    labels:
+      kompose.image-pull-policy: "Always"
+      kompose.service.type: nodeport
+      kompose.service.expose: "true"
     ports:
       - 3000:3000
-    environment:
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:/admin/grafana
     links:
       - edge
       - prom
@@ -104,6 +105,7 @@ services:
  ## Analytics ##
  ###############
 
+
   analytics-server:
     image : dgoldstein1/websiteanalytics-backend
     environment:
@@ -114,9 +116,11 @@ services:
     depends_on:
       - mongodb
     ports:
-      - 5002:5000
+      - 5000:5000
 
   mongodb:
     image: 'mongo:4.0.5'
+    ports:
+      - 27017:27017
     volumes:
       - /data/db
