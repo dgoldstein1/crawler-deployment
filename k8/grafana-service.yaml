@@ -3,20 +3,17 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
-    kompose.service.expose: "true"
-    kompose.service.type: nodeport
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: edge
-  name: edge
+    io.kompose.service: grafana
+  name: grafana
 spec:
   ports:
-  - name: "8443"
-    port: 8443
-    targetPort: 80
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
   selector:
-    io.kompose.service: edge
-  type: NodePort
+    io.kompose.service: grafana
 status:
   loadBalancer: {}

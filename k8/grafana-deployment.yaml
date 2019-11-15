@@ -28,6 +28,8 @@ spec:
           value: "true"
         image: dgoldstein1/crawler-deployment:grafana
         name: grafana
+        ports:
+        - containerPort: 3000
         resources: {}
       restartPolicy: Always
 status: {}

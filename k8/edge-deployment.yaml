@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+    kompose.service.expose: "true"
+    kompose.service.type: nodeport
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
@@ -15,6 +17,8 @@ spec:
     metadata:
       annotations:
         kompose.cmd: kompose -f docker-compose.yaml.k8-config convert
+        kompose.service.expose: "true"
+        kompose.service.type: nodeport
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:

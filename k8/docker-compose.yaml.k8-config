@@ -26,9 +26,19 @@ services:
 
   edge:
     image: dgoldstein1/crawler-deployment:edge
+    labels: 
+      kompose.service.type: nodeport
+      kompose.service.expose: "true"
     ports:
       - 8443:80
     restart: always
+    depends_on:
+      - links
+      - kv
+      - biggraph
+      - grafana
+      - prom
+      - analytics-server
 
   links:
     image: dgoldstein1/links:1.0.0
@@ -44,6 +54,7 @@ services:
     depends_on:
       - kv
       - graph
+      - websiteanalytics-backend
 
   kv:
     image: dgoldstein1/twowaykv:1.0.0
@@ -59,14 +70,22 @@ services:
     ports:
       - 5000:5000
       - 8001:8001
-    depends_on:
-      - prom
     volumes:
       - /data/current_graph.graph
 
   ################
   ## Monitoring ##
   ################
+  grafana:
+    image: dgoldstein1/crawler-deployment:grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:/admin/grafana
+    links:
+      - edge
+      - prom
 
   prom:
     image: dgoldstein1/crawler-deployment:prometheus
@@ -80,13 +99,6 @@ services:
     volumes:
       - ./data
 
-  grafana:
-    image: dgoldstein1/crawler-deployment:grafana
-    depends_on:
-      - prom
-    environment:
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:/admin/grafana
 
  ###############
  ## Analytics ##
@@ -99,8 +111,6 @@ services:
       - TEST_MODE=false
       - DATABASE_URL=mongodb://mongodb:27017
       - PORT=5000
-    links:
-      - mongodb
     depends_on:
       - mongodb
     ports:
