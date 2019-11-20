@@ -12,20 +12,17 @@ Indexes around 100k nodes and exit.
 
 ### Kubernetes
 
+- install kompose
+
 ```sh
 # start local minikube
-minikube start
+minikube start -p crawler-deployment
 ...
+cd k8
+rm -rf ./*.yaml
+kompose -f docker-compose.yaml.k8-config convert
 # start local cluster
-kubectrl create -f k8
-service/graph created
-deployment.apps/graph created
-service/crawler created
-deployment.apps/crawler created
-service/kv created
-deployment.apps/kv created
-service/prom created
-deployment.apps/prom created
+kubectrl apply -f .
 ...
 # see that all pods are working
 kubectrl get pods --watch
@@ -34,30 +31,15 @@ kubectrl get pods --watch
 # The username / password are "admin" / "admin".
 minikube service grafana
 # see that nodes have been added to the graph service
-kubectl describe service graph | grep TCP
-Port:                     main  5000/TCP
-TargetPort:               5000/TCP
-NodePort:                 main  30084/TCP
-Port:                     metrics  8001/TCP
-TargetPort:               8001/TCP
-NodePort:                 metrics  31199/TCP
-curl $(minikube ip):30084/info
-Python type PNGraph: Directed
-  Nodes:                    304
-  Edges:                    303
-  Zero Deg Nodes:           0
-  Zero InDeg Nodes:         1
-  Zero OutDeg Nodes:        303
-  NonZero In-Out Deg Nodes: 0
+minikube -p crawler-deployment service edge
 ```
 
-### Docker
+### GCE
 
-```sh
-docker-compose up -d
 ```
-Go to http://localhost:3000 to access grafana and find the dashboard "Crawler Backend Overview".
-
+gcloud container clusters get-credentials standard-cluster-1 --region us-central1-a
+kubectl apply -f k8
+```
 
 ## Authors
 
