@@ -37,7 +37,7 @@ minikube -p crawler-deployment service edge
 ### GCE
 
 ```
-gcloud container clusters get-credentials standard-cluster-1 --region us-central1-a
+gcloud container clusters get-credentials crawler-backend --region us-east1-b
 kubectl apply -f k8
 ```
 
