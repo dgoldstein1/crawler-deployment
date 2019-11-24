@@ -9,7 +9,7 @@ services:
   edge:
     image: dgoldstein1/crawler-deployment:edge
     labels: 
-      kompose.service.type: nodeport
+      kompose.service.type: loadbalancer
       kompose.service.expose: "true"
     ports:
       - 80:80
@@ -43,8 +43,6 @@ services:
     image: dgoldstein1/crawler-deployment:grafana
     labels:
       kompose.image-pull-policy: "Always"
-      kompose.service.type: nodeport
-      kompose.service.expose: "true"    
     ports:
       - 3000:3000
     links:
