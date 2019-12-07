@@ -15,7 +15,7 @@ services:
       - 80:80
 
   links:
-    image: dgoldstein1/links:1.0.0
+    image: dgoldstein1/links:1.0.2
     ports:
       - 3000:80
     labels:
@@ -39,18 +39,20 @@ services:
   ################
   ## Monitoring ##
   ################
-  grafana:
-    image: dgoldstein1/crawler-deployment:grafana
-    labels:
-      kompose.image-pull-policy: "Always"
-    ports:
-      - 3000:3000
-    links:
-      - edge
-      - prom
-    environment:
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
-      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:/admin/grafana
+  # grafana:
+  #   image: dgoldstein1/crawler-deployment:grafana
+  #   labels:
+  #     kompose.image-pull-policy: "Always"
+  #     kompose.service.type: nodeport
+  #     kompose.service.expose: "true"
+  #   ports:
+  #     - 3000:3000
+  #   links:
+  #     - edge
+  #     - prom
+  #   environment:
+  #     - GF_SERVER_SERVE_FROM_SUB_PATH=true
+  #     - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:/admin/grafana
 
 
   prom:
