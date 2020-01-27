@@ -14,15 +14,15 @@ services:
     depends_on:
       - kv
       - graph
+    restart: always
     environment:
       - GRAPH_DB_ENDPOINT=http://graph:5000
       - TWO_WAY_KV_ENDPOINT=http://kv:5001
-      - MAX_APPROX_NODES=-1
+      - MAX_APPROX_NODES=100000000000
       - COMMAND=ar
       - METRICS_PORT=8001
       - PARALLELISM=1
-      - MS_DELAY=100
-      - STARTING_ENDPOINT=
+      - MS_DELAY=220
 
   # c2:
   #   image: dgoldstein1/crawler:1.2.0
@@ -57,17 +57,13 @@ services:
 
   links:
     image: dgoldstein1/links:1.0.5
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     labels:
       kompose.service.type: loadbalancer
       kompose.service.expose: "true"
     ports:
-      - 3000:3000
+      - 3002:3000
     environment:
       # configure reverse-proxy
-      - PORT=3000
       - services=biggraph,twowaykv,geoip,wikipedia,analytics,grafana,prometheus,links
       ###################
       ## core services ##
@@ -79,7 +75,7 @@ services:
       - twowaykv_incoming_path=/services/twowaykv/
       - twowaykv_outgoing_url=http://kv:5001
       - wikipedia_incoming_path=/services/wiki/
-      - wikipedia_outgoing_url=https://en.wikipedia.org
+      - wikipedia_outgoing_url=https://ar.wikipedia.org
       ###############
       ## analytics ##
       ###############
@@ -108,8 +104,8 @@ services:
     environment:
       - USE_S3=true
       - AWS_DEFAULT_REGION=us-east-1
-      - AWS_SECRET_ACCESS_KEY=okBZ9/t2ByQmKhqZr46Q8aiOU85NBTm6mZT5/sqW
-      - AWS_ACCESS_KEY_ID=AKIA5FVQ53D7V2ZDVDPU
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_ACCESS_KEY_ID=
       - AWS_KV_PATH=s3://links-deployment/synonyms/twowaykv/arabic
       - AWS_SYNC_DIRECTORY=s3://links-deployment/synonyms/twowaykv/arabic
       - GRAPH_DB_STORE_DIR=/db/twowaykv
@@ -124,10 +120,10 @@ services:
       - prom
     environment:
       - GRAPH_SAVE_INTERVAL=60
-      - AWS_ACCESS_KEY_ID=AKIA5FVQ53D7V2ZDVDPU
+      - AWS_ACCESS_KEY_ID=
       - AWS_DEFAULT_REGION=us-east-1
       - AWS_GRAPH_PATH=s3://links-deployment/synonyms/biggraph/arabic/arabic_graph.graph
-      - AWS_SECRET_ACCESS_KEY=okBZ9/t2ByQmKhqZr46Q8aiOU85NBTm6mZT5/sqW
+      - AWS_SECRET_ACCESS_KEY=
       - AWS_SYNC_DIRECTORY=s3://links-deployment/synonyms/biggraph/arabic
       - GRAPH_SAVE_PATH=/data/arabic_graph.graph
       - USE_S3=true
@@ -141,13 +137,13 @@ services:
     ports:
       - 9090:9090
     entrypoint: "/bin/prometheus --web.external-url http://localhost:8443/admin/prometheus/ --web.route-prefix=/ --log.level=debug --config.file=/etc/prometheus/prometheus.yml"
-    # volumes:
-    #   - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     image: dgoldstein1/crawler-deployment:grafana
-    # volumes:
-    #   - ./docker/grafana/provisioning/:/etc/grafana/provisioning/
+    volumes:
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
       kompose.service.type: loadbalancer
       kompose.service.expose: "true"
@@ -163,19 +159,32 @@ services:
  ## Analytics ##
  ###############
 
-  # analytics-server:
-  #   image : dgoldstein1/websiteanalytics-backend
-  #   environment:
-  #     - LOGGER=true
-  #     - TEST_MODE=false
-  #     - DATABASE_URL=mongodb://mongodb:27017
-  #     - PORT=5000
-  #   links:
-  #     - mongodb
-  #   depends_on:
-  #     - mongodb
-  #   ports:
-  #     - 5002:5000
+  analytics-server:
+    image : dgoldstein1/websiteanalytics-backend
+    environment:
+      - LOGGER=true
+      - TEST_MODE=false
+      - DATABASE_URL=mongodb://mongodb:27017
+      - PORT=5000
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - 5002:5000
 
-  # mongodb:
-  #   image: 'mongo:4.0.5'
+
+  analytics-ui:
+    image: dgoldstein1/websiteanalytics-frontend:0.1.0
+    environment:
+      - PORT=3000
+      - services=ui,backend
+      - backend_incoming_path=/api/metrics/
+      - backend_outgoing_url=http://analytics-server:5000
+      - ui_incoming_path=/
+      - ui_outgoing_url=file:///static-files
+    ports:
+      - 3003:3000
+
+  mongodb:
+    image: 'mongo:4.0.5'
