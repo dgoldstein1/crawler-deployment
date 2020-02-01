@@ -8,6 +8,8 @@ scrape_configs:
     static_configs:
       - targets:
           - crawler:8001
+          - c2:8001
+          - c3:8001
 
 
   - job_name: kv
